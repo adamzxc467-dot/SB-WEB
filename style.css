@@ -1,0 +1,311 @@
+/* أيقونة زر المساعدة */
+.help-btn img {
+    width: 1%;  /* حجم خاص بالمساعدة */
+    height: 1%;
+    opacity: 1;
+    color: #ffffff;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+/* أيقونة وضع الداكن */
+.dark-mode-btn img {
+    width: 400%;  /* حجم خاص بالقمر/الشمس */
+    height: 400%;
+    opacity: 1;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.glassMode-bth img {
+        width: 400%;  /* حجم خاص بالقمر/الشمس */
+    height: 400%;
+    opacity: 1;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+
+
+/* أيقونة كتم الصوت */
+.mute-btn img {
+    width: 100%;  /* حجم خاص بالصوت */
+    height: 100%;
+    opacity: 1;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+body.glass-mode .back-btn {
+            background: rgba(255, 255, 255, 0.25) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           📄 الوضع الورقي - أبيض وأسود فاخر
+           ═══════════════════════════════════════════════════════════ */
+        
+        body.paper-mode {
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.paper-mode::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 20px,
+                rgba(0, 0, 0, 0.03) 20px,
+                rgba(0, 0, 0, 0.03) 40px
+            );
+            animation: paperLines 20s linear infinite;
+            z-index: 0;
+        }
+
+        body.paper-mode::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 20px,
+                rgba(0, 0, 0, 0.02) 20px,
+                rgba(0, 0, 0, 0.02) 40px
+            );
+            animation: paperLines 25s linear infinite reverse;
+            z-index: 0;
+        }
+
+        @keyframes paperLines {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(50%, 50%) rotate(360deg); }
+        }
+
+        body.paper-mode .container {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(30px) saturate(100%) !important;
+            -webkit-backdrop-filter: blur(30px) saturate(100%) !important;
+            border: 3px solid rgba(0, 0, 0, 0.15) !important;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.15),
+                        inset 0 0 60px rgba(0, 0, 0, 0.03) !important;
+            position: relative;
+            z-index: 1;
+        }
+
+        body.paper-mode h1 {
+            background: linear-gradient(135deg, #000000, #2c2c2c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        body.paper-mode .dhikr-text {
+            color: #000000 !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            font-weight: 700;
+        }
+
+        body.paper-mode .counter-display {
+            background: rgba(0, 0, 0, 0.9) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 2px solid rgba(0, 0, 0, 0.2) !important;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15),
+                        inset 0 0 40px rgba(255, 255, 255, 0.05) !important;
+            color: #ffffff !important;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        body.paper-mode .btn {
+            background: rgba(0, 0, 0, 0.85) !important;
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
+            border: 2px solid rgba(0, 0, 0, 0.2) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2),
+                        inset 0 0 30px rgba(255, 255, 255, 0.05) !important;
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        body.paper-mode .btn:hover {
+            background: rgba(0, 0, 0, 0.95) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25),
+                        inset 0 0 40px rgba(255, 255, 255, 0.08) !important;
+            transform: translateY(-5px);
+        }
+
+        body.paper-mode .mute-btn {
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
+            border: 2px solid rgba(0, 0, 0, 0.2) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1),
+                        inset 0 0 30px rgba(0, 0, 0, 0.03) !important;
+            color: #000000 !important;
+        }
+
+        body.paper-mode .mute-btn:hover {
+            background: rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15),
+                        inset 0 0 40px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        body.paper-mode .mode-btn {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 2px solid rgba(0, 0, 0, 0.15) !important;
+            color: #000000 !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08),
+                        inset 0 0 20px rgba(0, 0, 0, 0.02) !important;
+        }
+
+        body.paper-mode .mode-btn:hover {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12),
+                        inset 0 0 25px rgba(0, 0, 0, 0.03) !important;
+        }
+
+        body.paper-mode .mode-btn.active {
+            background: rgba(0, 0, 0, 0.9) !important;
+            border: 2px solid rgba(0, 0, 0, 0.3) !important;
+            color: #ffffff !important;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2),
+                        inset 0 0 30px rgba(255, 255, 255, 0.05) !important;
+        }
+
+        body.paper-mode .footer {
+            color: rgba(0, 0, 0, 0.6) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        body.paper-mode .new-btn {
+            background: rgba(0, 0, 0, 0.9) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 2px solid rgba(0, 0, 0, 0.2) !important;
+            color: #ffffff !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2),
+                        inset 0 0 30px rgba(255, 255, 255, 0.05) !important;
+            position: relative;
+            z-index: 1;
+        }
+
+        body.paper-mode .new-btn:hover {
+            background: rgba(0, 0, 0, 1) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3),
+                        inset 0 0 40px rgba(255, 255, 255, 0.08) !important;
+        }
+
+        body.paper-mode .menu-btn {
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 2px solid rgba(0, 0, 0, 0.2) !important;
+            color: #000000 !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15),
+                        inset 0 0 30px rgba(0, 0, 0, 0.03) !important;
+            position: relative;
+            z-index: 2001;
+        }
+
+        body.paper-mode .menu-btn:hover {
+            background: rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2),
+                        inset 0 0 40px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        body.paper-mode .side-menu {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px) saturate(100%);
+            -webkit-backdrop-filter: blur(30px) saturate(100%);
+            border-right: 3px solid rgba(0, 0, 0, 0.15);
+            box-shadow: 5px 0 40px rgba(0, 0, 0, 0.15);
+        }
+
+        body.paper-mode .menu-item {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        body.paper-mode .menu-item:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(0, 0, 0, 0.25);
+        }
+
+        body.paper-mode .menu-item-text {
+            color: #000000;
+        }
+
+        body.paper-mode .menu-item-icon {
+            background: linear-gradient(135deg, #000000, #2c2c2c);
+            color: #ffffff;
+        }
+
+        body.paper-mode .menu-title {
+            background: linear-gradient(135deg, #000000, #2c2c2c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.paper-mode .modal-content {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(30px) !important;
+            -webkit-backdrop-filter: blur(30px) !important;
+            border: 3px solid rgba(0, 0, 0, 0.15) !important;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.2),
+                        inset 0 0 50px rgba(0, 0, 0, 0.03) !important;
+        }
+
+        body.paper-mode .modal-title {
+            color: #000000 !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        body.paper-mode .help-content {
+            color: rgba(0, 0, 0, 0.85) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        body.paper-mode .feature-box {
+            background: rgba(0, 0, 0, 0.9) !important;
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
+            border: 2px solid rgba(0, 0, 0, 0.2) !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+                        inset 0 0 25px rgba(255, 255, 255, 0.05) !important;
+        }
+
+        body.paper-mode .more-text {
+            color: #000000 !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        body.paper-mode .back-btn {
+            background: rgba(0, 0, 0, 0.9) !important;
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
+            border: 2px solid rgba(0, 0, 0, 0.2) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15),
+                        inset 0 0 30px rgba(255, 255, 255, 0.05) !important;
+            color: #ffffff !important;
+        }

@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SB WEB </title>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        *:focus {
+            outline: none;
+        }
+
+        button:focus,
+        button:active {
+            outline: none;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 20px;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+
+        body.special-mode {
+            background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 20%, #8e24aa 40%, #9c27b0 60%, #ab47bc 80%, #ba68c8 100%);
+            background-size: 600% 600%;
+            animation: specialGradientShift 8s ease infinite, colorPulse 4s ease infinite;
+        }
+
+        body.morning-mode {
+            background: linear-gradient(135deg, #f7b733 0%, #fc4a1a 30%, #ff9068 60%, #fd868c 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+        }
+
+        body.evening-mode {
+            background: linear-gradient(135deg, #232526 0%, #414345 25%, #1a2a6c 50%, #b21f1f 75%, #fdbb2d 100%);
+            background-size: 500% 500%;
+            animation: gradientShift 14s ease infinite;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 25%, #24243e 50%, #141e30 75%, #243b55 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        body.dark-mode .container {
+            background: rgba(25, 25, 35, 0.6);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+
+        body.dark-mode h1 {
+            background: linear-gradient(135deg, #a78bfa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.dark-mode .dhikr-text {
+            color: #ecf0f1;
+        }
+
+        body.dark-mode .footer {
+            color: #bdc3c7;
+        }
+
+        body.dark-mode .mode-btn {
+            background: rgba(52, 73, 94, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #ecf0f1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .mode-btn.active {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        }
+
+        body.dark-mode .mode-btn.special.active {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+        }
+
+        body.dark-mode .mode-btn.morning.active {
+            background: linear-gradient(135deg, #d35400, #e67e22);
+        }
+
+        body.dark-mode .mode-btn.evening.active {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+        }
+
+        body.dark-mode .new-btn {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .new-btn:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.75);
+        }
+
+        body.dark-mode .help-btn {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .help-btn:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.75);
+        }
+
+        body.dark-mode .dark-mode-btn {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .dark-mode-btn:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.75);
+        }
+
+        body.dark-mode .menu-btn {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .menu-btn:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.75);
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           🌊 وضع الزجاج السائل الشفاف 100%
+           ═══════════════════════════════════════════════════════════ */
+        
+        body.glass-mode .container {
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(40px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
+            border: 2px solid rgba(255, 255, 255, 0.25) !important;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.15),
+                        inset 0 0 60px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body.glass-mode h1 {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        body.glass-mode .dhikr-text {
+            color: rgba(255, 255, 255, 0.95) !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3),
+                         0 0 20px rgba(255, 255, 255, 0.2);
+            font-weight: 700;
+        }
+
+        body.glass-mode .counter-display {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(30px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(30px) saturate(200%) !important;
+            border: 2px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2),
+                        inset 0 0 40px rgba(255, 255, 255, 0.15) !important;
+            color: rgba(255, 255, 255, 1) !important;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        body.glass-mode .btn {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(20px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1) !important;
+            color: rgba(255, 255, 255, 1) !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        body.glass-mode .btn:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2),
+                        inset 0 0 40px rgba(255, 255, 255, 0.15) !important;
+            transform: translateY(-5px);
+        }
+
+        body.glass-mode .mute-btn {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(20px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body.glass-mode .mute-btn:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2),
+                        inset 0 0 40px rgba(255, 255, 255, 0.15) !important;
+        }
+
+        body.glass-mode .mode-btn {
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(15px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1),
+                        inset 0 0 20px rgba(255, 255, 255, 0.08) !important;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        body.glass-mode .mode-btn:hover {
+            background: rgba(255, 255, 255, 0.25) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+                        inset 0 0 25px rgba(255, 255, 255, 0.12) !important;
+        }
+
+        body.glass-mode .mode-btn.active {
+            background: rgba(255, 255, 255, 0.35) !important;
+            border: 2px solid rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2),
+                        inset 0 0 30px rgba(255, 255, 255, 0.2) !important;
+        }
+
+        body.glass-mode .footer {
+            color: rgba(255, 255, 255, 0.8) !important;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        body.glass-mode .new-btn {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(25px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+            color: rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1) !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        body.glass-mode .new-btn:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2),
+                        inset 0 0 40px rgba(255, 255, 255, 0.15) !important;
+        }
+
+        body.glass-mode .help-btn,
+        body.glass-mode .dark-mode-btn,
+        body.glass-mode .glass-mode-btn {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(25px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+            color: rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body.glass-mode .help-btn:hover,
+        body.glass-mode .dark-mode-btn:hover,
+        body.glass-mode .glass-mode-btn:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2),
+                        inset 0 0 40px rgba(255, 255, 255, 0.15) !important;
+        }
+
+        body.glass-mode .menu-btn {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(25px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+            color: rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body.glass-mode .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2),
+                        inset 0 0 40px rgba(255, 255, 255, 0.15) !important;
+        }
+
+        body.glass-mode .modal-content {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(40px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
+            border: 2px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.2),
+                        inset 0 0 50px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body.glass-mode .modal-title {
+            color: rgba(255, 255, 255, 0.95) !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        body.glass-mode .help-content {
+            color: rgba(255, 255, 255, 0.9) !important;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        body.glass-mode .feature-box {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+                        inset 0 0 25px rgba(255, 255, 255, 0.08) !important;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        body.glass-mode .more-text {
+            color: rgba(255, 255, 255, 0.95) !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        body.glass-mode .back-btn {
+            background: rgba(255, 255, 255, 0.25) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        @keyframes specialGradientShift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 50% 100%; }
+            75% { background-position: 0% 0%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes colorPulse {
+            0%, 100% { filter: brightness(1) saturate(1); }
+            50% { filter: brightness(1.2) saturate(1.3); }
+        }
+
+        .new-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(17, 153, 142, 0.4);
+            font-weight: bold;
+            z-index: 1000;
+            animation: colorChange 3s ease infinite;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .new-btn svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .new-btn:hover svg {
+            transform: rotate(90deg) scale(1.2);
+        }
+
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 15px;
+            font-size: 1.8em;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+            font-weight: bold;
+            z-index: 2001;
+            transition: all 0.3s ease;
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-3px) rotate(90deg);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.7);
+        }
+
+        .menu-btn.active {
+            transform: rotate(90deg);
+        }
+
+        .menu-btn svg {
+            width: 28px;
+            height: 28px;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn:hover svg {
+            transform: rotate(90deg);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -350px;
+            width: 320px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border-right: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
+            z-index: 1500;
+            transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            padding: 100px 30px 30px 30px;
+            overflow-y: auto;
+            will-change: left;
+            transform: translateZ(0);
+        }
+
+        .side-menu.open {
+            left: 0;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1400;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .menu-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1.5px solid rgba(102, 126, 234, 0.3);
+            border-radius: 20px;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .menu-item-icon {
+            font-size: 1.8em;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item-icon svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover .menu-item-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .menu-item:hover .menu-item-icon svg {
+            animation: iconBounce 0.6s ease;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .menu-item-text {
+            flex: 1;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        body.dark-mode .side-menu {
+            background: rgba(25, 25, 35, 0.98);
+            border-right: 2px solid rgba(139, 92, 246, 0.3);
+        }
+
+        body.dark-mode .menu-item {
+            background: rgba(52, 73, 94, 0.7);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        body.dark-mode .menu-item:hover {
+            background: rgba(52, 73, 94, 0.9);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        body.dark-mode .menu-item-text {
+            color: #ecf0f1;
+        }
+
+        body.glass-mode .side-menu {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border-right: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        body.glass-mode .menu-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        body.glass-mode .menu-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        body.glass-mode .menu-item-text {
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        body.glass-mode .menu-title {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           📄 الوضع الورقي (أسود وأبيض فقط)
+           ═══════════════════════════════════════════════════════════ */
+        
+        @keyframes paperLines {
+            0% { background-position: 0 0, 50px 50px; }
+            100% { background-position: 100px 100px, 150px 150px; }
+        }
+
+        body.paper-mode {
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    #ffffff,
+                    #ffffff 10px,
+                    #f5f5f5 10px,
+                    #f5f5f5 20px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    #fafafa,
+                    #fafafa 10px,
+                    #f0f0f0 10px,
+                    #f0f0f0 20px
+                );
+            background-size: 100px 100px, 100px 100px;
+            animation: paperLines 20s linear infinite;
+        }
+
+        body.paper-mode .container {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 3px solid #000000 !important;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15),
+                        inset 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        body.paper-mode h1 {
+            background: #000000;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            font-weight: 900;
+        }
+
+        body.paper-mode .dhikr-text {
+            color: #000000 !important;
+            text-shadow: none;
+            font-weight: 700;
+        }
+
+        body.paper-mode .counter-display {
+            background: rgba(0, 0, 0, 0.9) !important;
+            border: 3px solid #000000 !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .btn {
+            background: rgba(0, 0, 0, 0.9) !important;
+            border: 2px solid #000000 !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+            color: #ffffff !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .btn:hover {
+            background: rgba(0, 0, 0, 1) !important;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-3px);
+        }
+
+        body.paper-mode .mute-btn {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 2px solid #000000 !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+            color: #000000 !important;
+        }
+
+        body.paper-mode .mute-btn:hover {
+            background: rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        body.paper-mode .mode-btn {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 2px solid #000000 !important;
+            color: #000000 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .mode-btn:hover {
+            background: rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        body.paper-mode .mode-btn.active {
+            background: rgba(0, 0, 0, 0.9) !important;
+            border: 2px solid #000000 !important;
+            color: #ffffff !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+        }
+
+        body.paper-mode .footer {
+            color: #000000 !important;
+            text-shadow: none;
+            font-weight: 600;
+        }
+
+        body.paper-mode .new-btn {
+            background: rgba(0, 0, 0, 0.9) !important;
+            border: 2px solid #000000 !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .new-btn:hover {
+            background: rgba(0, 0, 0, 1) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        body.paper-mode .menu-btn {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 2px solid #000000 !important;
+            color: #000000 !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        body.paper-mode .menu-btn:hover {
+            background: rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        body.paper-mode .side-menu {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-right: 3px solid #000000 !important;
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        body.paper-mode .menu-title {
+            color: #000000 !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .menu-item {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 2px solid #000000 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        body.paper-mode .menu-item:hover {
+            background: rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        body.paper-mode .menu-item-icon {
+            background: #000000 !important;
+            color: #ffffff !important;
+        }
+
+        body.paper-mode .menu-item-text {
+            color: #000000 !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .modal-content {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border: 3px solid #000000 !important;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        body.paper-mode .modal-title {
+            color: #000000 !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .help-content {
+            color: #000000 !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .feature-box {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 2px solid #000000 !important;
+            color: #000000 !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .more-text {
+            color: #000000 !important;
+            text-shadow: none;
+        }
+
+        body.paper-mode .back-btn {
+            background: rgba(0, 0, 0, 0.9) !important;
+            border: 2px solid #000000 !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        body.paper-mode .back-btn:hover {
+            background: rgba(0, 0, 0, 1) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           🎨 وضع الألوان المخصصة
+           ═══════════════════════════════════════════════════════════ */
+        
+        body.custom-mode {
+            background: var(--custom-bg-color, linear-gradient(135deg, #667eea, #764ba2)) !important;
+        }
+
+        body.custom-mode .container {
+            background: var(--custom-container-bg, rgba(255, 255, 255, 0.6)) !important;
+            opacity: var(--custom-opacity, 1);
+        }
+
+        body.custom-mode .btn,
+        body.custom-mode .mute-btn,
+        body.custom-mode .reset-btn {
+            background: var(--custom-button-color, linear-gradient(135deg, #f093fb, #f5576c)) !important;
+        }
+
+        body.custom-mode .counter-display {
+            background: var(--custom-button-color, linear-gradient(135deg, #667eea, #764ba2)) !important;
+        }
+
+        body.custom-mode .mode-btn.active {
+            background: var(--custom-button-color, linear-gradient(135deg, #667eea, #764ba2)) !important;
+        }
+
+        .color-picker-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .color-picker-modal.active {
+            display: flex;
+        }
+
+        .color-picker-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .color-picker-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .color-picker-group {
+            margin-bottom: 25px;
+        }
+
+        .color-picker-label {
+            display: block;
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .color-picker-input {
+            width: 100%;
+            height: 60px;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-picker-input:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .transparency-slider {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(to right, transparent, #667eea);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .transparency-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.5);
+        }
+
+        .transparency-value {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.1em;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .apply-colors-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 15px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .apply-colors-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .help-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            font-size: 1.5em;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            font-weight: bold;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-btn:hover {
+            transform: translateY(-3px) rotate(15deg);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .dark-mode-btn {
+            position: fixed;
+            top: 90px;
+            left: 20px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            font-size: 1.3em;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(44, 62, 80, 0.4);
+            font-weight: bold;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dark-mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(44, 62, 80, 0.6);
+        }
+
+        .glass-mode-btn {
+            position: fixed;
+            top: 160px;
+            left: 20px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            font-size: 1.3em;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+            font-weight: bold;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glass-mode-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 212, 255, 0.6);
+        }
+
+        @keyframes colorChange {
+            0% { background: linear-gradient(135deg, #11998e, #38ef7d); }
+            33% { background: linear-gradient(135deg, #f093fb, #f5576c); }
+            66% { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+            100% { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        }
+
+        .new-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(17, 153, 142, 0.6);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-title {
+            font-size: 1.6em;
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .help-content {
+            font-size: 1.2em;
+            color: #333;
+            text-align: center;
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+
+        .help-content p {
+            margin-bottom: 15px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-box {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #f7b733, #fc4a1a);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: white;
+            font-size: 1.3em;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(247, 183, 51, 0.4);
+            transition: all 0.3s ease;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(247, 183, 51, 0.6);
+        }
+
+        .more-text {
+            font-size: 1.4em;
+            color: #667eea;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 107, 107, 0.6);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 35px;
+            padding: 50px 40px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        h1 {
+            font-size: 3.2em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            text-shadow: none;
+            font-weight: 800;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            background: rgba(232, 232, 232, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #555;
+            padding: 12px 22px;
+            font-size: 0.95em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .mode-btn.special.active {
+            background: linear-gradient(135deg, #8e24aa, #6a1b9a);
+            box-shadow: 0 5px 15px rgba(142, 36, 170, 0.4);
+        }
+
+        .mode-btn.morning.active {
+            background: linear-gradient(135deg, #f7b733, #fc4a1a);
+            box-shadow: 0 5px 15px rgba(247, 183, 51, 0.4);
+        }
+
+        .mode-btn.evening.active {
+            background: linear-gradient(135deg, #434343, #000000);
+            box-shadow: 0 5px 15px rgba(67, 67, 67, 0.4);
+        }
+
+        .dhikr-text {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: bold;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.6;
+            cursor: grab;
+            user-select: none;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .dhikr-text:active {
+            cursor: grabbing;
+        }
+
+        .dhikr-text.swipe-left {
+            animation: swipeLeftAnim 0.3s ease;
+        }
+
+        .dhikr-text.swipe-right {
+            animation: swipeRightAnim 0.3s ease;
+        }
+
+        @keyframes swipeLeftAnim {
+            0% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(-30px); opacity: 0.5; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes swipeRightAnim {
+            0% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(30px); opacity: 0.5; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .counter-display {
+            font-size: 4.5em;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            border-radius: 25px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+            min-width: 170px;
+            letter-spacing: 3px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border: none;
+            color: white;
+            padding: 22px 55px;
+            font-size: 1.4em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.5);
+            font-weight: bold;
+            margin: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 87, 108, 0.6);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .mute-btn {
+            background: linear-gradient(135deg, #ffa726, #fb8c00);
+            border: none;
+            color: white;
+            padding: 20px;
+            font-size: 1.3em;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 167, 38, 0.4);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mute-btn svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .mute-btn:hover svg {
+            transform: scale(1.2);
+            animation: soundWave 0.6s ease;
+        }
+
+        @keyframes soundWave {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(0.9); }
+            75% { transform: scale(1.1); }
+        }
+
+        .mute-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 167, 38, 0.6);
+        }
+
+        .mute-btn.muted {
+            background: linear-gradient(135deg, #757575, #616161);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+            padding: 15px 40px;
+            font-size: 1.1em;
+        }
+
+        .reset-btn:hover {
+            box-shadow: 0 12px 30px rgba(79, 172, 254, 0.6);
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <button class="new-btn" onclick="openModal()" data-translate="newFeatures">
+        <i data-lucide="sparkles"></i>
+        <span>جَـدِيـدٌ</span>
+    </button>
+    <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">
+        <i data-lucide="menu"></i>
+    </button>
+
+    <!-- القائمة الجانبية -->
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+    <div class="side-menu" id="sideMenu">
+        <h2 class="menu-title" data-translate="menu">القائمة</h2>
+        
+        <div class="menu-item" onclick="openHelpModal(); toggleMenu();">
+            <div class="menu-item-icon">
+                <i data-lucide="help-circle"></i>
+            </div>
+            <div class="menu-item-text" data-translate="help">المساعدة</div>
+        </div>
+
+        <div class="menu-item" onclick="toggleDarkMode();">
+            <div class="menu-item-icon" id="menuDarkIcon">
+                <i data-lucide="moon"></i>
+            </div>
+            <div class="menu-item-text" data-translate="darkMode">الوضع الداكن</div>
+        </div>
+
+        <div class="menu-item" onclick="toggleGlassMode();">
+            <div class="menu-item-icon" id="menuGlassIcon">
+                <i data-lucide="droplet"></i>
+            </div>
+            <div class="menu-item-text" data-translate="glassMode">وضع الزجاج السائل</div>
+        </div>
+
+        <div class="menu-item" onclick="togglePaperMode();">
+            <div class="menu-item-icon" id="menuPaperIcon">
+                <i data-lucide="file-text"></i>
+            </div>
+            <div class="menu-item-text" data-translate="paperMode">الوضع الورقي</div>
+        </div>
+
+        <div class="menu-item" onclick="openCustomColorPicker();">
+            <div class="menu-item-icon">
+                <i data-lucide="palette"></i>
+            </div>
+            <div class="menu-item-text" data-translate="customMode">وضع مخصص</div>
+        </div>
+
+        <div class="menu-item" onclick="toggleMute();">
+            <div class="menu-item-icon" id="menuSoundIcon">
+                <i data-lucide="volume-2"></i>
+            </div>
+            <div class="menu-item-text" data-translate="muteSound">كتم الصوت</div>
+        </div>
+
+        <div class="menu-item" onclick="resetCounter(); toggleMenu();">
+            <div class="menu-item-icon">
+                <i data-lucide="rotate-ccw"></i>
+            </div>
+            <div class="menu-item-text" data-translate="resetCounter">إعادة العداد</div>
+        </div>
+
+        <div class="menu-item" onclick="toggleLanguage();">
+            <div class="menu-item-icon" id="menuLangIcon">
+                <i data-lucide="languages"></i>
+            </div>
+            <div class="menu-item-text" data-translate="language">تغيير اللغة</div>
+        </div>
+    </div>
+
+    <!-- نافذة تخصيص الألوان -->
+    <div class="color-picker-modal" id="colorPickerModal">
+        <div class="color-picker-content">
+            <h2 class="color-picker-title" data-translate="customColorTitle">تخصيص الألوان</h2>
+            
+            <div class="color-picker-group">
+                <label class="color-picker-label" data-translate="backgroundColor">لون الخلفية</label>
+                <input type="color" id="bgColorPicker" class="color-picker-input" value="#667eea">
+            </div>
+
+            <div class="color-picker-group">
+                <label class="color-picker-label" data-translate="buttonColor">لون الأزرار</label>
+                <input type="color" id="btnColorPicker" class="color-picker-input" value="#f093fb">
+            </div>
+
+            <div class="color-picker-group">
+                <label class="color-picker-label" data-translate="transparency">الشفافية</label>
+                <input type="range" id="transparencySlider" class="transparency-slider" 
+                       min="0" max="100" value="60" oninput="updateTransparencyValue()">
+                <span class="transparency-value" id="transparencyValue">60%</span>
+            </div>
+
+            <button class="apply-colors-btn" onclick="applyCustomColors()" data-translate="applyColors">تطبيق</button>
+            <br><br>
+            <center>
+                <button class="back-btn" onclick="closeCustomColorPicker()" data-translate="backBtn">رجوع</button>
+            </center>
+        </div>
+    </div>
+
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <h2 class="modal-title">كيفية استخدام السبحة الإلكترونية</h2>
+            
+            <div class="help-content">
+                <p>مرحباً بك في تطبيق التسابيح الإلكتروني 📿</p>
+                
+                <p><strong>الوضع العادي:</strong> عداد بسيط للعد حتى ما لا نهاية، بدون أذكار</p>
+                
+                <p><strong>الوضع الخاص:</strong> 15 ذكر متنوع، استخدم السحب لتغيير الأذكار</p>
+                
+                <p><strong>أذكار الصباح:</strong> 12 ذكر من أذكار الصباح</p>
+                
+                <p><strong>أذكار المساء:</strong> 12 ذكر من أذكار المساء</p>
+                
+                <p><strong>طريقة الاستخدام:</strong> اسحب النص لليمين ➡️ للذكر التالي، أو لليسار ⬅️ للذكر السابق</p>
+                
+                <p>يمكنك كتم الصوت 🔊 أو إعادة العداد 🔄 في أي وقت</p>
+                
+                <p><strong>بارك الله فيك وجعله في ميزان حسناتك 🤲</strong></p>
+            </div>
+            
+            <center>
+                <button class="back-btn" onclick="closeHelpModal()">رجوع</button>
+            </center>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">سيتم إضافة مميزات أخرى قريباً مثل</h2>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-box">
+                        الوان اكثر
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-box">
+                        اشكال اكثر
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-box">
+                        اوضاع اكثر
+                    </div>
+                </div>
+            </div>
+            
+            <div class="more-text">والمزيد....</div>
+            
+            <center>
+                <button class="back-btn" onclick="closeModal()">رجوع</button>
+            </center>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>تَسَــابِيــحُ</h1>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="setMode('normal')">ٱلْعَدَّاد</button>
+            <button class="mode-btn special" onclick="setMode('special')">ٱلْأَذْكَار</button>
+            <button class="mode-btn morning" onclick="setMode('morning')">ٱلصَّبَاح</button>
+            <button class="mode-btn evening" onclick="setMode('evening')">ٱلْمَسَاء</button>
+        </div>
+        
+        <div class="dhikr-text" id="dhikrText">عَدَّادٌ إِلِكْتُرُونِيّ</div>
+        
+        <div class="counter-display" id="counter">00</div>
+        
+        <div class="button-row">
+            <button class="btn" id="countBtn" onclick="incrementCount()">اِضْغَطْ</button>
+            <button class="mute-btn" id="muteBtn" onclick="toggleMute()"></button>
+        </div>
+        <br>
+        <button class="btn reset-btn" onclick="resetCounter()">إِعَادَةٌ</button>
+        
+        <div class="footer">SB 5.0 O ADAMZ</div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════
+        // 🎨 روابط الأيقونات - ضع روابط SVG هنا
+        // ═══════════════════════════════════════════════════════════
+        const ICONS = {
+            help: '', // ضع رابط أيقونة علامة الاستفهام هنا
+            darkMode: '', // ضع رابط أيقونة القمر هنا
+            lightMode: '', // ضع رابط أيقونة الشمس هنا
+            soundOn: '', // ضع رابط أيقونة السماعة (صوت مفتوح) هنا
+            soundOff: '', // ضع رابط أيقونة السماعة (صوت مغلق) هنا
+            glassMode: '', // ضع رابط أيقونة قطرة الماء (وضع الزجاج) هنا
+            normalMode: '' // ضع رابط أيقونة المربع (الوضع العادي) هنا
+        };
+        
+        // ═══════════════════════════════════════════════════════════
+        // 🎨 إعدادات تخصيص الأيقونات
+        // ═══════════════════════════════════════════════════════════
+        const ICON_SETTINGS = {
+            // حجم الأيقونات (بالنسبة المئوية من حجم الزر)
+            size: 60, // القيمة الافتراضية 60% (يمكن تغييرها من 30 إلى 100)
+            
+            // لون الأيقونات في الوضع العادي
+            colorLight: '#ffffff', // أبيض (يمكن استخدام أي كود لون hex)
+            
+            // لون الأيقونات في الوضع الداكن
+            colorDark: '#ffffff', // أبيض (يمكن استخدام أي كود لون hex)
+            
+            // شفافية الأيقونات (من 0 إلى 1)
+            opacity: 1 // القيمة الافتراضية 1 (غير شفاف)
+        };
+        // ═══════════════════════════════════════════════════════════
+
+        let count = 0;
+        let currentDhikrIndex = 0;
+        let currentMode = 'normal';
+        let isMuted = false;
+        let isDarkMode = false;
+        let isGlassMode = false;
+        let isPaperMode = false;
+        let currentLanguage = 'ar'; // اللغة الافتراضية: عربي
+        
+        // متغيرات للسحب
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        // الترجمات
+        const translations = {
+            ar: {
+                title: "تسابيح",
+                menu: "القائمة",
+                help: "المساعدة",
+                darkMode: "الوضع الداكن",
+                glassMode: "وضع الزجاج السائل",
+                paperMode: "الوضع الورقي",
+                customMode: "وضع مخصص",
+                muteSound: "كتم الصوت",
+                resetCounter: "إعادة العداد",
+                language: "تغيير اللغة",
+                clickBtn: "اضغط",
+                resetBtn: "إعادة",
+                counter: "عداد إلكتروني",
+                modeCounter: "عداد",
+                modeAdhkar: "اذكار",
+                modeMorning: "أذكار الصباح",
+                modeEvening: "أذكار المساء",
+                newFeatures: "+ جديد",
+                footerVersion: "5.0v",
+                modalFeaturesTitle: "سيتم إضافة مميزات أخرى قريباً مثل",
+                feature1: "نظام تغير الالوان",
+                feature2: "انميشن وتحركات اكثر سلاسة",
+                feature3: "أذكار بعد الصلاة",
+                moreText: "والمزيد....",
+                backBtn: "رجوع",
+                helpTitle: "كيفية استخدام السبحة الإلكترونية",
+                helpWelcome: "مرحباً بك في تطبيق التسابيح الإلكتروني 📿",
+                helpCounter: "عداد بسيط للعد حتى ما لا نهاية، بدون أذكار",
+                helpAdhkar: "15 ذكر متنوع، استخدم السحب لتغيير الأذكار",
+                helpMorning: "12 ذكر من أذكار الصباح",
+                helpEvening: "12 ذكر من أذكار المساء",
+                helpSwipe: "اسحب النص لليمين ➡️ للذكر التالي، أو لليسار ⬅️ للذكر السابق",
+                helpMute: "يمكنك كتم الصوت 🔊 أو إعادة العداد 🔄 في أي وقت",
+                helpFooter: "بارك الله فيك وجعله في ميزان حسناتك 🤲",
+                helpCredit: "تمت اعمال الكتابة والتصميم والتصدير من AdamZ",
+                customColorTitle: "تخصيص الألوان",
+                backgroundColor: "لون الخلفية",
+                buttonColor: "لون الأزرار",
+                transparency: "الشفافية",
+                applyColors: "تطبيق"
+            },
+            en: {
+                title: "Tasbih",
+                menu: "Menu",
+                help: "Help",
+                darkMode: "Dark Mode",
+                glassMode: "Glass Mode",
+                paperMode: "Paper Mode",
+                customMode: "Custom Mode",
+                muteSound: "Mute Sound",
+                resetCounter: "Reset Counter",
+                language: "Change Language",
+                clickBtn: "Click",
+                resetBtn: "Reset",
+                counter: "Electronic Counter",
+                modeCounter: "Counter",
+                modeAdhkar: "Adhkar",
+                modeMorning: "Morning Adhkar",
+                modeEvening: "Evening Adhkar",
+                newFeatures: "+ New",
+                footerVersion: "5.0v",
+                modalFeaturesTitle: "More features coming soon",
+                feature1: "Color system",
+                feature2: "Smooth animations",
+                feature3: "After prayer adhkar",
+                moreText: "And more....",
+                backBtn: "Back",
+                helpTitle: "How to use the Electronic Tasbih",
+                helpWelcome: "Welcome to Electronic Tasbih App 📿",
+                helpCounter: "Simple counter up to infinity, without adhkar",
+                helpAdhkar: "15 diverse adhkar, swipe to change",
+                helpMorning: "12 morning adhkar",
+                helpEvening: "12 evening adhkar",
+                helpSwipe: "Swipe right ➡️ for next, or left ⬅️ for previous",
+                helpMute: "You can mute sound 🔊 or reset counter 🔄 anytime",
+                helpFooter: "May Allah bless you 🤲",
+                helpCredit: "Designed and developed by AdamZ",
+                customColorTitle: "Customize Colors",
+                backgroundColor: "Background Color",
+                buttonColor: "Button Color",
+                transparency: "Transparency",
+                applyColors: "Apply"
+            }
+        };
+        
+                const adhkarNormal = [];
+
+        const adhkarSpecial = [
+  "سُبْحَانَ اللَّهِ ",
+  "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+  "سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ",
+  "سُبْحَانَ اللهِ العَظِيمِ وَبِحَمْدِهِ ",
+  "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ ",
+  "لَا إلَه إلّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلُّ شَيْءِ قَدِيرِ. ",
+  "الْحَمْدُ للّهِ رَبِّ الْعَالَمِينَ ",
+  "لا حَوْلَ وَلا قُوَّةَ إِلا بِاللَّهِ ",
+  "الْلَّهُم صَلِّ وَسَلِم وَبَارِك عَلَى سَيِّدِنَا مُحَمَّد ",
+  "أستغفر الله ",
+  "سُبْحَانَ الْلَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَهَ إِلَّا الْلَّهُ، وَالْلَّهُ أَكْبَرُ",
+  "لَا إِلَهَ إِلَّا اللَّهُ ",
+  "الْلَّهُ أَكْبَرُ ",
+  "سُبْحَانَ اللَّهِ ، وَالْحَمْدُ لِلَّهِ ، وَلا إِلَهَ إِلا اللَّهُ ، وَاللَّهُ أَكْبَرُ ، اللَّهُمَّ اغْفِرْ لِي ، اللَّهُمَّ ارْحَمْنِي ، اللَّهُمَّ ارْزُقْنِي.",
+  "الْحَمْدُ لِلَّهِ حَمْدًا كَثِيرًا طَيِّبًا مُبَارَكًا فِيهِ. ",
+  "اللَّهُ أَكْبَرُ كَبِيرًا ، وَالْحَمْدُ لِلَّهِ كَثِيرًا ، وَسُبْحَانَ اللَّهِ بُكْرَةً وَأَصِيلاً. ",
+  "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ , وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ , اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ. "
+];
+
+const adhkarMorning = [
+  "اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ. ",
+  "قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ. ",
+  "قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ. ",
+  "قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.",
+  "أَصْـبَحْنا وَأَصْـبَحَ المُـلْكُ لله وَالحَمدُ لله ، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير ، رَبِّ أسْـأَلُـكَ خَـيرَ ما في هـذا اليوم وَخَـيرَ ما بَعْـدَه ، وَأَعـوذُ بِكَ مِنْ شَـرِّ ما في هـذا اليوم وَشَرِّ ما بَعْـدَه، رَبِّ أَعـوذُبِكَ مِنَ الْكَسَـلِ وَسـوءِ الْكِـبَر ، رَبِّ أَعـوذُ بِكَ مِنْ عَـذابٍ في النّـارِ وَعَـذابٍ في القَـبْر.",
+  "حَسْبِيَ اللَّهُ، لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ، وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ",
+  "اللّهـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ ، خَلَقْتَنـي وَأَنا عَبْـدُك ، وَأَنا عَلـى عَهْـدِكَ وَوَعْـدِكَ ما اسْتَـطَعْـت ، أَعـوذُبِكَ مِنْ شَـرِّ ما صَنَـعْت ، أَبـوءُ لَـكَ بِنِعْـمَتِـكَ عَلَـيَّ وَأَبـوءُ بِذَنْـبي فَاغْفـِرْ لي فَإِنَّـهُ لا يَغْـفِرُ الذُّنـوبَ إِلاّ أَنْتَ .",
+  "رَضيـتُ بِاللهِ رَبَّـاً وَبِالإسْلامِ ديـناً وَبِمُحَـمَّدٍ صلى الله عليه وسلم نَبِيّـاً.",
+  "اللّهُـمَّ إِنِّـي أَصْبَـحْتُ أُشْـهِدُك ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـك ، وَمَلَائِكَتَكَ ، وَجَمـيعَ خَلْـقِك ، أَنَّـكَ أَنْـتَ اللهُ لا إلهَ إلاّ أَنْـتَ وَحْـدَكَ لا شَريكَ لَـك ، وَأَنَّ ُ مُحَمّـداً عَبْـدُكَ وَرَسـولُـك.",
+  "اللّهُـمَّ ما أَصْبَـَحَ بي مِـنْ نِعْـمَةٍ أَو بِأَحَـدٍ مِـنْ خَلْـقِك ، فَمِـنْكَ وَحْـدَكَ لا شريكَ لَـك ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـر. ",
+  "حَسْبِـيَ اللّهُ لا إلهَ إلاّ هُوَ عَلَـيهِ تَوَكَّـلتُ وَهُوَ رَبُّ العَرْشِ العَظـيم.",
+  "بِسـمِ اللهِ الذي لا يَضُـرُّ مَعَ اسمِـهِ شَيءٌ في الأرْضِ وَلا في السّمـاءِ وَهـوَ السّمـيعُ العَلـيم.",
+  "اللّهُـمَّ بِكَ أَصْـبَحْنا وَبِكَ أَمْسَـينا ، وَبِكَ نَحْـيا وَبِكَ نَمُـوتُ وَإِلَـيْكَ النُّـشُور. ",
+  "أَصْبَـحْـنا عَلَى فِطْرَةِ الإسْلاَمِ، وَعَلَى كَلِمَةِ الإِخْلاَصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ، وَعَلَى مِلَّةِ أَبِينَا إبْرَاهِيمَ حَنِيفاً مُسْلِماً وَمَا كَانَ مِنَ المُشْرِكِينَ.",
+  "سُبْحـانَ اللهِ وَبِحَمْـدِهِ عَدَدَ خَلْـقِه ، وَرِضـا نَفْسِـه ، وَزِنَـةَ عَـرْشِـه ، وَمِـدادَ كَلِمـاتِـه. ",
+  "اللّهُـمَّ عافِـني في بَدَنـي ، اللّهُـمَّ عافِـني في سَمْـعي ، اللّهُـمَّ عافِـني في بَصَـري ، لا إلهَ إلاّ أَنْـتَ. ",
+  "اللّهُـمَّ إِنّـي أَعـوذُ بِكَ مِنَ الْكُـفر ، وَالفَـقْر ، وَأَعـوذُ بِكَ مِنْ عَذابِ القَـبْر ، لا إلهَ إلاّ أَنْـتَ.",
+  "اللّهُـمَّ إِنِّـي أسْـأَلُـكَ العَـفْوَ وَالعـافِـيةَ في الدُّنْـيا وَالآخِـرَة ، اللّهُـمَّ إِنِّـي أسْـأَلُـكَ العَـفْوَ وَالعـافِـيةَ في ديني وَدُنْـيايَ وَأهْـلي وَمالـي ، اللّهُـمَّ اسْتُـرْ عـوْراتي وَآمِـنْ رَوْعاتـي ، اللّهُـمَّ احْفَظْـني مِن بَـينِ يَدَيَّ وَمِن خَلْفـي وَعَن يَمـيني وَعَن شِمـالي ، وَمِن فَوْقـي ، وَأَعـوذُ بِعَظَمَـتِكَ أَن أُغْـتالَ مِن تَحْتـي.",
+  "يَا حَيُّ يَا قيُّومُ بِرَحْمَتِكَ أسْتَغِيثُ أصْلِحْ لِي شَأنِي كُلَّهُ وَلاَ تَكِلْنِي إلَى نَفْسِي طَـرْفَةَ عَيْنٍ. ",
+  "أَصْبَـحْـنا وَأَصْبَـحْ المُـلكُ للهِ رَبِّ العـالَمـين ، اللّهُـمَّ إِنِّـي أسْـأَلُـكَ خَـيْرَ هـذا الـيَوْم ، فَـتْحَهُ ، وَنَصْـرَهُ ، وَنـورَهُ وَبَـرَكَتَـهُ ، وَهُـداهُ ، وَأَعـوذُ بِـكَ مِـنْ شَـرِّ ما فـيهِ وَشَـرِّ ما بَعْـدَه.",
+  "اللّهُـمَّ عالِـمَ الغَـيْبِ وَالشّـهادَةِ فاطِـرَ السّماواتِ وَالأرْضِ رَبَّ كـلِّ شَـيءٍ وَمَليـكَه ، أَشْهَـدُ أَنْ لا إِلـهَ إِلاّ أَنْت ، أَعـوذُ بِكَ مِن شَـرِّ نَفْسـي وَمِن شَـرِّ الشَّيْـطانِ وَشِرْكِهِ ، وَأَنْ أَقْتَـرِفَ عَلـى نَفْسـي سوءاً أَوْ أَجُـرَّهُ إِلـى مُسْـلِم. ",
+  "أَعـوذُ بِكَلِمـاتِ اللّهِ التّـامّـاتِ مِنْ شَـرِّ ما خَلَـق. ",
+  "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ على نَبِيِّنَا مُحمَّد. ",
+  "اللَّهُمَّ إِنَّا نَعُوذُ بِكَ مِنْ أَنْ نُشْرِكَ بِكَ شَيْئًا نَعْلَمُهُ ، وَنَسْتَغْفِرُكَ لِمَا لَا نَعْلَمُهُ. ",
+  "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ الْهَمِّ وَالْحَزَنِ، وَأَعُوذُ بِكَ مِنْ الْعَجْزِ وَالْكَسَلِ، وَأَعُوذُ بِكَ مِنْ الْجُبْنِ وَالْبُخْلِ، وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ، وَقَهْرِ الرِّجَالِ. ",
+  "أسْتَغْفِرُ اللهَ العَظِيمَ الَّذِي لاَ إلَهَ إلاَّ هُوَ، الحَيُّ القَيُّومُ، وَأتُوبُ إلَيهِ. ",
+  "يَا رَبِّ , لَكَ الْحَمْدُ كَمَا يَنْبَغِي لِجَلَالِ وَجْهِكَ , وَلِعَظِيمِ سُلْطَانِكَ.",
+  "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا. ",
+  "قَدِيرٌ ، وَأَنَّ اللَّهَ قَدْ أَحَاطَ بِكُلِّ شَيْءٍ عِلْمًا , اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي ، وَمِنْ شَرِّ كُلِّ دَابَّةٍ أَنْتَ آخِذٌ بِنَاصِيَتِهَا ، إِنَّ رَبِّي عَلَى صِرَاطٍ مُسْتَقِيمٍ. ",
+  "اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلا أَنْتَ ، عَلَيْكَ تَوَكَّلْتُ ، وَأَنْتَ رَبُّ الْعَرْشِ الْعَظِيمِ , مَا شَاءَ اللَّهُ كَانَ ، وَمَا لَمْ يَشَأْ لَمْ يَكُنْ ، وَلا حَوْلَ وَلا قُوَّةَ إِلا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ , أَعْلَمُ أَنَّ اللَّهَ عَلَى كُلِّ شَيْءٍ" ,
+  "لَا إلَه إلّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءِ قَدِيرِ. ",
+  "سُبْحـانَ اللهِ وَبِحَمْـدِهِ.",
+  "أسْتَغْفِرُ اللهَ وَأتُوبُ إلَيْهِ "
+
+  
+
+];
+
+const adhkarEvening = [
+  "اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ. ",
+  "اللَّهُ نَفْسًا إِلَّا وُسْعَهَا لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَّسِينَآ أَوْ أَخْطَأْنَا رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِنْ قَبْلِنَا رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا أَنْتَ مَوْلَانَا فَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ.",
+  "آمَنَ الرَّسُولُ بِمَا أُنْزِلَ إِلَيْهِ مِنْ رَبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِنْ رُسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ. لَا يُكَلِّفُ",
+  "قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ. ",
+  "قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.",
+  "قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ. ",
+  "وَأَعـوذُ بِكَ مِنْ شَـرِّ ما في هـذهِ اللَّـيْلةِ وَشَرِّ ما بَعْـدَهـا ، رَبِّ أَعـوذُبِكَ مِنَ الْكَسَـلِ وَسـوءِ الْكِـبَر ، رَبِّ أَعـوذُ بِكَ مِنْ عَـذابٍ في النّـارِ وَعَـذابٍ في القَـبْر.",
+  "أَمْسَيْـنا وَأَمْسـى المـلكُ لله وَالحَمدُ لله ، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير ، رَبِّ أسْـأَلُـكَ خَـيرَ ما في هـذهِ اللَّـيْلَةِ وَخَـيرَ ما بَعْـدَهـا ،",
+  "اللّهـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ ، خَلَقْتَنـي وَأَنا عَبْـدُك ، وَأَنا عَلـى عَهْـدِكَ وَوَعْـدِكَ ما اسْتَـطَعْـت ، أَعـوذُبِكَ مِنْ شَـرِّ ما صَنَـعْت ، أَبـوءُ لَـكَ بِنِعْـمَتِـكَ عَلَـيَّ وَأَبـوءُ بِذَنْـبي فَاغْفـِرْ لي فَإِنَّـهُ لا يَغْـفِرُ الذُّنـوبَ إِلاّ أَنْتَ .",
+  "رَضيـتُ بِاللهِ رَبَّـاً وَبِالإسْلامِ ديـناً وَبِمُحَـمَّدٍ صلى الله عليه وسلم نَبِيّـاً. ",
+  "اللّهُـمَّ إِنِّـي أَمسيتُ أُشْـهِدُك ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـك ، وَمَلَائِكَتَكَ ، وَجَمـيعَ خَلْـقِك ، أَنَّـكَ أَنْـتَ اللهُ لا إلهَ إلاّ أَنْـتَ وَحْـدَكَ لا شَريكَ لَـك ، وَأَنَّ ُ مُحَمّـداً عَبْـدُكَ وَرَسـولُـك.",
+  "اللّهُـمَّ ما أَمسى بي مِـنْ نِعْـمَةٍ أَو بِأَحَـدٍ مِـنْ خَلْـقِك ، فَمِـنْكَ وَحْـدَكَ لا شريكَ لَـك ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـر. ",
+  "حَسْبِـيَ اللّهُ لا إلهَ إلاّ هُوَ عَلَـيهِ تَوَكَّـلتُ وَهُوَ رَبُّ العَرْشِ العَظـيم. ",
+  "بِسـمِ اللهِ الذي لا يَضُـرُّ مَعَ اسمِـهِ شَيءٌ في الأرْضِ وَلا في السّمـاءِ وَهـوَ السّمـيعُ العَلـيم.",
+  "اللّهُـمَّ بِكَ أَمْسَـينا وَبِكَ أَصْـبَحْنا، وَبِكَ نَحْـيا وَبِكَ نَمُـوتُ وَإِلَـيْكَ الْمَصِيرُ. ",
+  "أَمْسَيْنَا عَلَى فِطْرَةِ الإسْلاَمِ، وَعَلَى كَلِمَةِ الإِخْلاَصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ، وَعَلَى مِلَّةِ أَبِينَا إبْرَاهِيمَ حَنِيفاً مُسْلِماً وَمَا كَانَ مِنَ المُشْرِكِينَ. ",
+  "سُبْحـانَ اللهِ وَبِحَمْـدِهِ عَدَدَ خَلْـقِه ، وَرِضـا نَفْسِـه ، وَزِنَـةَ عَـرْشِـه ، وَمِـدادَ كَلِمـاتِـه. ",
+  "اللّهُـمَّ عافِـني في بَدَنـي ، اللّهُـمَّ عافِـني في سَمْـعي ، اللّهُـمَّ عافِـني في بَصَـري ، لا إلهَ إلاّ أَنْـتَ. ",
+  "اللّهُـمَّ إِنّـي أَعـوذُ بِكَ مِنَ الْكُـفر ، وَالفَـقْر ، وَأَعـوذُ بِكَ مِنْ عَذابِ القَـبْر ، لا إلهَ إلاّ أَنْـتَ.",
+  "اللّهُـمَّ إِنِّـي أسْـأَلُـكَ العَـفْوَ وَالعـافِـيةَ في الدُّنْـيا وَالآخِـرَة ، اللّهُـمَّ إِنِّـي أسْـأَلُـكَ العَـفْوَ وَالعـافِـيةَ في ديني وَدُنْـيايَ وَأهْـلي وَمالـي ، اللّهُـمَّ اسْتُـرْ عـوْراتي وَآمِـنْ رَوْعاتـي ، اللّهُـمَّ احْفَظْـني مِن بَـينِ يَدَيَّ وَمِن خَلْفـي وَعَن يَمـيني وَعَن شِمـالي ، وَمِن فَوْقـي ، وَأَعـوذُ بِعَظَمَـتِكَ أَن أُغْـتالَ مِن تَحْتـي. ",
+  "يَا حَيُّ يَا قيُّومُ بِرَحْمَتِكَ أسْتَغِيثُ أصْلِحْ لِي شَأنِي كُلَّهُ وَلاَ تَكِلْنِي إلَى نَفْسِي طَـرْفَةَ عَيْنٍ. ",
+  "أَمْسَيْنا وَأَمْسَى الْمُلْكُ للهِ رَبِّ الْعَالَمَيْنِ، اللَّهُمَّ إِنَّي أسْأَلُكَ خَيْرَ هَذَه اللَّيْلَةِ فَتْحَهَا ونَصْرَهَا، ونُوْرَهَا وبَرَكَتهَا، وَهُدَاهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فيهِا وَشَرَّ مَا بَعْدَهَا. ",
+  "اللّهُـمَّ عالِـمَ الغَـيْبِ وَالشّـهادَةِ فاطِـرَ السّماواتِ وَالأرْضِ رَبَّ كـلِّ شَـيءٍ وَمَليـكَه ، أَشْهَـدُ أَنْ لا إِلـهَ إِلاّ أَنْت ، أَعـوذُ بِكَ مِن شَـرِّ نَفْسـي وَمِن شَـرِّ الشَّيْـطانِ وَشِرْكِهِ ، وَأَنْ أَقْتَـرِفَ عَلـى نَفْسـي سوءاً أَوْ أَجُـرَّهُ إِلـى مُسْـلِم.",
+  "أَعـوذُ بِكَلِمـاتِ اللّهِ التّـامّـاتِ مِنْ شَـرِّ ما خَلَـق. ",
+  "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ على نَبِيِّنَا مُحمَّد. ",
+  "اللَّهُمَّ إِنَّا نَعُوذُ بِكَ مِنْ أَنْ نُشْرِكَ بِكَ شَيْئًا نَعْلَمُهُ ، وَنَسْتَغْفِرُكَ لِمَا لَا نَعْلَمُهُ. ",
+  "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ الْهَمِّ وَالْحَزَنِ، وَأَعُوذُ بِكَ مِنْ الْعَجْزِ وَالْكَسَلِ، وَأَعُوذُ بِكَ مِنْ الْجُبْنِ وَالْبُخْلِ، وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ، وَقَهْرِ الرِّجَالِ. ",
+  "أسْتَغْفِرُ اللهَ العَظِيمَ الَّذِي لاَ إلَهَ إلاَّ هُوَ، الحَيُّ القَيُّومُ، وَأتُوبُ إلَيهِ.",
+  "يَا رَبِّ , لَكَ الْحَمْدُ كَمَا يَنْبَغِي لِجَلَالِ وَجْهِكَ , وَلِعَظِيمِ سُلْطَانِكَ.",
+  "لَا إلَه إلّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءِ قَدِيرِ. ",
+  "اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلا أَنْتَ ، عَلَيْكَ تَوَكَّلْتُ ، وَأَنْتَ رَبُّ الْعَرْشِ الْعَظِيمِ , مَا شَاءَ اللَّهُ كَانَ ، وَمَا لَمْ يَشَأْ لَمْ يَكُنْ ، وَلا حَوْلَ وَلا قُوَّةَ إِلا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ , أَعْلَمُ أَنَّ اللَّهَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ ، وَأَنَّ اللَّهَ قَدْ أَحَاطَ بِكُلِّ شَيْءٍ عِلْمًا , اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي ، وَمِنْ شَرِّ كُلِّ دَابَّةٍ أَنْتَ آخِذٌ بِنَاصِيَتِهَا ، إِنَّ رَبِّي عَلَى صِرَاطٍ مُسْتَقِيمٍ. ",
+  "سُبْحـانَ اللهِ وَبِحَمْـدِهِ. "
+ 
+];
+        let currentAdhkar = adhkarNormal;
+
+        // إنشاء الأصوات
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playClickSound() {
+            if (isMuted) return;
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+        
+        function playCompleteSound() {
+            if (isMuted) return;
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 1200;
+            oscillator.type = 'triangle';
+            
+            gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        function incrementCount() {
+            // للوضع العادي: عداد بسيط بدون حد
+            if (currentMode === 'normal') {
+                count++;
+                playClickSound();
+                updateDisplay();
+                
+                document.getElementById('counter').classList.add('pulse');
+                setTimeout(() => {
+                    document.getElementById('counter').classList.remove('pulse');
+                }, 300);
+                
+                // صوت عند كل 100
+                if (count % 100 === 0) {
+                    playCompleteSound();
+                }
+                
+                return;
+            }
+            
+            // للوضع الخاص وأذكار الصباح والمساء: العد فقط بدون تغيير تلقائي
+            count++;
+            playClickSound();
+            updateDisplay();
+            
+            document.getElementById('counter').classList.add('pulse');
+            setTimeout(() => {
+                document.getElementById('counter').classList.remove('pulse');
+            }, 300);
+            
+            // صوت عند كل 100
+            if (count % 100 === 0) {
+                playCompleteSound();
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById('counter').textContent = 
+                count.toString().padStart(2, '0');
+        }
+
+        function resetCounter() {
+            playCompleteSound();
+            count = 0;
+            
+            // لا نغير الذكر الحالي، فقط نعيد العداد
+            updateDisplay();
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            count = 0;
+            currentDhikrIndex = 0;
+            
+            // تحديث الأزرار
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // إزالة جميع أوضاع الخلفية
+            document.body.classList.remove('special-mode', 'morning-mode', 'evening-mode');
+            
+            if (mode === 'normal') {
+                document.querySelector('.mode-btn:not(.special):not(.morning):not(.evening)').classList.add('active');
+                currentAdhkar = adhkarNormal;
+                document.getElementById('dhikrText').textContent = "عداد إلكتروني";
+            } else if (mode === 'special') {
+                document.querySelector('.mode-btn.special').classList.add('active');
+                currentAdhkar = adhkarSpecial;
+                document.body.classList.add('special-mode');
+                document.getElementById('dhikrText').textContent = currentAdhkar[0];
+            } else if (mode === 'morning') {
+                document.querySelector('.mode-btn.morning').classList.add('active');
+                currentAdhkar = adhkarMorning;
+                document.body.classList.add('morning-mode');
+                document.getElementById('dhikrText').textContent = currentAdhkar[0];
+            } else if (mode === 'evening') {
+                document.querySelector('.mode-btn.evening').classList.add('active');
+                currentAdhkar = adhkarEvening;
+                document.body.classList.add('evening-mode');
+                document.getElementById('dhikrText').textContent = currentAdhkar[0];
+            }
+            
+            updateDisplay();
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            const muteBtn = document.getElementById('muteBtn');
+            const menuSoundIcon = document.getElementById('menuSoundIcon');
+            
+            if (isMuted) {
+                muteBtn.innerHTML = '<i data-lucide="volume-x"></i>';
+                menuSoundIcon.innerHTML = '<i data-lucide="volume-x"></i>';
+                muteBtn.classList.add('muted');
+            } else {
+                muteBtn.innerHTML = '<i data-lucide="volume-2"></i>';
+                menuSoundIcon.innerHTML = '<i data-lucide="volume-2"></i>';
+                muteBtn.classList.remove('muted');
+            }
+            
+            // تحديث الأيقونات
+            lucide.createIcons();
+        }
+
+        function openModal() {
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function openHelpModal() {
+            document.getElementById('helpModal').classList.add('active');
+        }
+
+        function closeHelpModal() {
+            document.getElementById('helpModal').classList.remove('active');
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            const menuDarkIcon = document.getElementById('menuDarkIcon');
+            
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                if (menuDarkIcon) menuDarkIcon.innerHTML = '<i data-lucide="sun"></i>';
+            } else {
+                document.body.classList.remove('dark-mode');
+                if (menuDarkIcon) menuDarkIcon.innerHTML = '<i data-lucide="moon"></i>';
+            }
+            
+            lucide.createIcons();
+        }
+
+        function toggleGlassMode() {
+            isGlassMode = !isGlassMode;
+            const menuGlassIcon = document.getElementById('menuGlassIcon');
+            
+            if (isGlassMode) {
+                document.body.classList.add('glass-mode');
+                if (menuGlassIcon) menuGlassIcon.innerHTML = '<i data-lucide="square"></i>';
+            } else {
+                document.body.classList.remove('glass-mode');
+                if (menuGlassIcon) menuGlassIcon.innerHTML = '<i data-lucide="droplet"></i>';
+            }
+            
+            lucide.createIcons();
+        }
+
+        function togglePaperMode() {
+            isPaperMode = !isPaperMode;
+            const menuPaperIcon = document.getElementById('menuPaperIcon');
+            
+            if (isPaperMode) {
+                document.body.classList.add('paper-mode');
+                if (menuPaperIcon) menuPaperIcon.innerHTML = '<i data-lucide="brush"></i>';
+            } else {
+                document.body.classList.remove('paper-mode');
+                if (menuPaperIcon) menuPaperIcon.innerHTML = '<i data-lucide="file-text"></i>';
+            }
+            
+            lucide.createIcons();
+        }
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            updateLanguage();
+            
+            // تحديث الأيقونة
+            const menuLangIcon = document.getElementById('menuLangIcon');
+            if (menuLangIcon) {
+                menuLangIcon.innerHTML = currentLanguage === 'ar' ? '<i data-lucide="globe"></i>' : '<i data-lucide="globe"></i>';
+            }
+            
+            // تحديث اتجاه الصفحة
+            document.documentElement.setAttribute('dir', currentLanguage === 'ar' ? 'rtl' : 'ltr');
+            
+            lucide.createIcons();
+        }
+
+        function updateLanguage() {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLanguage][key]) {
+                    element.textContent = translations[currentLanguage][key];
+                }
+            });
+            
+            // تحديث نص العداد فقط إذا كنا في الوضع العادي
+            if (currentMode === 'normal') {
+                document.getElementById('dhikrText').textContent = translations[currentLanguage].counter;
+            }
+        }
+
+        function openCustomColorPicker() {
+            document.getElementById('colorPickerModal').classList.add('active');
+            toggleMenu(); // إغلاق القائمة
+        }
+
+        function closeCustomColorPicker() {
+            document.getElementById('colorPickerModal').classList.remove('active');
+        }
+
+        function updateTransparencyValue() {
+            const value = document.getElementById('transparencySlider').value;
+            document.getElementById('transparencyValue').textContent = value + '%';
+        }
+
+        function applyCustomColors() {
+            const bgColor = document.getElementById('bgColorPicker').value;
+            const btnColor = document.getElementById('btnColorPicker').value;
+            const transparency = document.getElementById('transparencySlider').value / 100;
+            
+            // تطبيق الألوان
+            const root = document.documentElement;
+            root.style.setProperty('--custom-bg-color', bgColor);
+            root.style.setProperty('--custom-button-color', btnColor);
+            root.style.setProperty('--custom-opacity', transparency);
+            
+            // تفعيل الوضع المخصص
+            document.body.classList.add('custom-mode');
+            
+            // إغلاق النافذة
+            closeCustomColorPicker();
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('sideMenu');
+            const overlay = document.getElementById('menuOverlay');
+            const menuBtn = document.getElementById('menuBtn');
+            
+            if (!menu || !overlay || !menuBtn) return;
+            
+            const isOpen = menu.classList.contains('open');
+            
+            if (isOpen) {
+                menu.classList.remove('open');
+                overlay.classList.remove('active');
+                menuBtn.classList.remove('active');
+            } else {
+                menu.classList.add('open');
+                overlay.classList.add('active');
+                menuBtn.classList.add('active');
+            }
+        }
+
+        // دالة لتطبيق إعدادات الأيقونات
+        function applyIconSettings() {
+            const root = document.documentElement;
+            
+            // تطبيق حجم الأيقونات
+            root.style.setProperty('--icon-size', `${ICON_SETTINGS.size}%`);
+            
+            // تطبيق الشفافية
+            root.style.setProperty('--icon-opacity', ICON_SETTINGS.opacity);
+            
+            // تحويل اللون إلى فلتر CSS
+            const lightFilter = hexToFilter(ICON_SETTINGS.colorLight);
+            const darkFilter = hexToFilter(ICON_SETTINGS.colorDark);
+            
+            root.style.setProperty('--icon-color-light', lightFilter);
+            root.style.setProperty('--icon-color-dark', darkFilter);
+        }
+
+        // دالة لتحويل اللون hex إلى فلتر CSS
+        function hexToFilter(hex) {
+            // إزالة # إذا كانت موجودة
+            hex = hex.replace('#', '');
+            
+            // تحويل hex إلى RGB
+            const r = parseInt(hex.substr(0, 2), 16) / 255;
+            const g = parseInt(hex.substr(2, 2), 16) / 255;
+            const b = parseInt(hex.substr(4, 2), 16) / 255;
+            
+            // حساب السطوع
+            const brightness = (r + g + b) / 3;
+            
+            // إنشاء الفلتر
+            if (hex.toLowerCase() === 'ffffff') {
+                return 'invert(1)';
+            } else if (hex.toLowerCase() === '000000') {
+                return 'invert(0)';
+            } else {
+                // للألوان الأخرى نستخدم hue-rotate وغيره
+                const hue = rgbToHue(r, g, b);
+                return `invert(${brightness}) sepia(1) saturate(5) hue-rotate(${hue}deg)`;
+            }
+        }
+
+        // دالة لحساب الـ hue من RGB
+        function rgbToHue(r, g, b) {
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            const delta = max - min;
+            
+            if (delta === 0) return 0;
+            
+            let hue;
+            if (max === r) {
+                hue = ((g - b) / delta) % 6;
+            } else if (max === g) {
+                hue = (b - r) / delta + 2;
+            } else {
+                hue = (r - g) / delta + 4;
+            }
+            
+            hue = Math.round(hue * 60);
+            if (hue < 0) hue += 360;
+            
+            return hue;
+        }
+
+        // وظائف السحب للانتقال بين الأذكار
+        function handleTouchStart(e) {
+            // لا تفعل السحب في الوضع العادي
+            if (currentMode === 'normal' || currentAdhkar.length === 0) return;
+            
+            // منع التفاعل مع القائمة
+            if (e.target.closest('.side-menu') || e.target.closest('.menu-btn')) return;
+            
+            touchStartX = e.touches[0].clientX;
+        }
+
+        function handleTouchMove(e) {
+            if (currentMode === 'normal' || currentAdhkar.length === 0) return;
+            
+            // منع التفاعل مع القائمة
+            if (e.target.closest('.side-menu') || e.target.closest('.menu-btn')) return;
+            
+            touchEndX = e.touches[0].clientX;
+        }
+
+        function handleTouchEnd() {
+            if (currentMode === 'normal' || currentAdhkar.length === 0) return;
+            
+            const swipeDistance = touchEndX - touchStartX;
+            const dhikrElement = document.getElementById('dhikrText');
+            
+            // إذا كان السحب أكبر من 50 بكسل
+            if (Math.abs(swipeDistance) > 50) {
+                if (swipeDistance > 0) {
+                    // سحب لليمين = الذكر التالي
+                    currentDhikrIndex = (currentDhikrIndex + 1) % currentAdhkar.length;
+                    dhikrElement.classList.add('swipe-right');
+                } else {
+                    // سحب لليسار = الذكر السابق
+                    currentDhikrIndex = (currentDhikrIndex - 1 + currentAdhkar.length) % currentAdhkar.length;
+                    dhikrElement.classList.add('swipe-left');
+                }
+                
+                playClickSound();
+                document.getElementById('dhikrText').textContent = currentAdhkar[currentDhikrIndex];
+                
+                // إعادة العداد إلى 0 عند تغيير الذكر
+                count = 0;
+                updateDisplay();
+                
+                // إزالة التأثير بعد انتهائه
+                setTimeout(() => {
+                    dhikrElement.classList.remove('swipe-left', 'swipe-right');
+                }, 300);
+            }
+            
+            touchStartX = 0;
+            touchEndX = 0;
+        }
+
+        // إضافة مستمعي الأحداث للسحب
+        document.addEventListener('DOMContentLoaded', () => {
+            // تطبيق إعدادات الأيقونات
+            applyIconSettings();
+            
+            // تفعيل أيقونات Lucide
+            lucide.createIcons();
+            
+            const dhikrElement = document.getElementById('dhikrText');
+            
+            dhikrElement.addEventListener('touchstart', handleTouchStart, { passive: true });
+            dhikrElement.addEventListener('touchmove', handleTouchMove, { passive: true });
+            dhikrElement.addEventListener('touchend', handleTouchEnd);
+            
+            // دعم الماوس أيضاً
+            let mouseDown = false;
+            let mouseStartX = 0;
+            
+            dhikrElement.addEventListener('mousedown', (e) => {
+                if (currentMode === 'normal' || currentAdhkar.length === 0) return;
+                mouseDown = true;
+                mouseStartX = e.clientX;
+            });
+            
+            dhikrElement.addEventListener('mousemove', (e) => {
+                if (!mouseDown) return;
+                e.preventDefault();
+            });
+            
+            dhikrElement.addEventListener('mouseup', (e) => {
+                if (!mouseDown || currentMode === 'normal' || currentAdhkar.length === 0) {
+                    mouseDown = false;
+                    return;
+                }
+                
+                const swipeDistance = e.clientX - mouseStartX;
+                
+                if (Math.abs(swipeDistance) > 50) {
+                    if (swipeDistance > 0) {
+                        // سحب لليمين = الذكر التالي
+                        currentDhikrIndex = (currentDhikrIndex + 1) % currentAdhkar.length;
+                        dhikrElement.classList.add('swipe-right');
+                    } else {
+                        // سحب لليسار = الذكر السابق
+                        currentDhikrIndex = (currentDhikrIndex - 1 + currentAdhkar.length) % currentAdhkar.length;
+                        dhikrElement.classList.add('swipe-left');
+                    }
+                    
+                    playClickSound();
+                    document.getElementById('dhikrText').textContent = currentAdhkar[currentDhikrIndex];
+                    
+                    // إعادة العداد إلى 0 عند تغيير الذكر
+                    count = 0;
+                    updateDisplay();
+                    
+                    setTimeout(() => {
+                        dhikrElement.classList.remove('swipe-left', 'swipe-right');
+                    }, 300);
+                }
+                
+                mouseDown = false;
+            });
+            
+            dhikrElement.addEventListener('mouseleave', () => {
+                mouseDown = false;
+            });
+        });
+    </script>
+</body>
+</html>
